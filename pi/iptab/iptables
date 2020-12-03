@@ -1,0 +1,31 @@
+*filter
+ 
+# Deny all inbound traffic
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+ 
+# Accept all outbound traffic
+:OUTPUT ACCEPT [0:0]
+ 
+# Accept already connected sessions
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+ 
+# Accept all loopback 
+-A INPUT -i lo -j ACCEPT
+ 
+# Open https/http port from anywhere
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+ 
+# Accept ssh port from anywhere
+# -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+ 
+# Accept ssh port from only your static IP address such as 1.2.3.4
+-A INPUT -m state --state NEW -m tcp -p tcp -s 1.2.3.4 --dport 22 -j ACCEPT
+# Multiple IPs are also allowed 
+-A INPUT -m state --state NEW -m tcp -p tcp -s 202.53.1.2,93.1.2.3 --dport 22 -j ACCEPT
+ 
+# Deny from specific IP address 
+#-A INPUT -m state --state NEW -s 1.2.3.4 -j DROP
+ 
+COMMIT

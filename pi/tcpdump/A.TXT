@@ -1,0 +1,1 @@
+15:46:03.922347 IP ip-172-31-89-131.ec2.internal.ssh > 187-44-233-102.STATIC.itsweb.com.br.56075: Flags [P.], seq 729681789:729682041, ack 3212382172, win 12359, length 252
